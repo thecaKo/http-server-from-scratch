@@ -1,7 +1,6 @@
 # Servidor HTTP em C
 
 Este projeto implementa um servidor _HTTP_ simples em C, que escuta conexões na porta 3490 e responde com uma página HTML básica.
-Requisitos
 
 Antes de executar o servidor, você precisa ter o seguinte instalado em seu sistema:
 ```
