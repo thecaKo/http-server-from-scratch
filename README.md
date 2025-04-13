@@ -1,93 +1,97 @@
-# Servidor HTTP em C
 
-Este projeto implementa um servidor _HTTP_ simples em C, que escuta conexões na porta 3490 e responde com uma página HTML básica.
+# 🌐 Guia Simples: Criando um Servidor HTTP em C
 
-Antes de executar o servidor, você precisa ter o seguinte instalado em seu sistema:
-```
-GCC (GNU Compiler Collection)
-Bibliotecas padrão de rede do Linux (como arpa/inet.h, netdb.h, etc.)
-```
-Esses pacotes geralmente estão disponíveis em distribuições Linux como parte do build-essential e outras ferramentas de desenvolvimento.
+Bem-vindo! Este guia vai te mostrar, passo a passo, como esse projeto funciona e como você pode rodar um servidor HTTP básico em C. Vamos nessa? 🚀
 
-### Compilação
+---
 
-Para compilar o servidor _HTTP_, siga os passos abaixo:
-```
-Clone o repositório e compile usando | gcc server.c -o server.
-```
-### Execução
+## 📦 Sobre o Projeto
 
-Para iniciar o servidor HTTP:
-```
-./server.c
-```
-O servidor irá iniciar e escutar na porta 3490. Após o servidor ser iniciado, ele vai exibir a mensagem:
-```
-Servidor escutando na porta 3490...
-```
-### Testando a conexão 
+Este é um servidor HTTP **feito do zero em C**. Ele escuta conexões na porta 3490 e responde com uma página HTML simples. Ideal pra quem quer entender como a web funciona por trás dos panos.
 
-Você pode testar a resposta do servidor _HTTP_ acessando `http://localhost:3490` utilizando um navegador ou o `telnet`, `curl`, enfim...
+---
 
-Você deve ver a seguinte resposta HTML:
-```
-Server HTTP with C
+## 🧰 O que você vai precisar
+
+Antes de começar, verifique se tem o seguinte:
+
+- ✅ Um compilador C (como o `gcc`)
+- ✅ Um terminal (Linux ou WSL no Windows)
+- ✅ Vontade de aprender! 😄
+
+---
+
+## 🛠️ Como Compilar
+
+Abra o terminal na pasta do projeto e digite:
+
+```bash
+gcc server.c -o server
 ```
 
-### Parando o servidor
+Isso vai compilar o código e gerar um executável chamado `server`.
 
-Para parar o servidor, simplesmente pressione `CTRL+C`.
+---
 
-### Como funciona pode de baixo dos panos?
+## 🚀 Como Rodar
 
-Muito obrigado ao Beej por esse guia incrível: https://beej.us/guide/bgnet/html/split-wide/index.html
+Ainda no terminal, execute:
 
-#### Função `main()`
+```bash
+./server
+```
 
-A função principal configura e executa o servidor:
+O servidor vai iniciar e começar a escutar conexões na porta **3490**.
 
-`sockfd`: Descritor do _socket_ do servidor.
+---
 
-`new_fd`: Descritor para nova conexão.
+## 🌍 Como Acessar
 
-`bindcall, listencall`: Verificações das chamadas bind() e listen().
+Abra seu navegador e digite:
 
-`status, hints, servinfo`: Usados para resolver o endereço e configurar o _socket_.
+```
+http://localhost:3490
+```
 
-`buffer`: Armazena dados recebidos.
+Você verá uma página HTML simples, enviada pelo seu próprio servidor!
 
-#### Configuração de `getaddrinfo()`
+---
 
-`struct addrinfo`: Criando a estrutura que vai ser alimentada depois.
-`getaddrinfo()`: Busca o IPV4(ou IPV6), no caso o do `localhost``.
+## 🧠 O que acontece por trás?
 
-#### Criação e Configuração do `Socket`
+Vamos explicar de forma simples o que o código faz:
 
-`socket()`: Cria um _socket_ e retorna um socker descriptor.
+1. 🧪 **Cria um socket** – como se fosse um telefone pronto para receber ligações.
+2. 🪛 **Configura opções** – define que o socket pode ser reutilizado.
+3. 🧱 **Associa o socket a uma porta (3490)** – conecta o telefone a uma linha.
+4. 👂 **Escuta conexões** – espera alguém ligar.
+5. 🤝 **Aceita uma conexão** – atende a ligação.
+6. 📩 **Lê os dados** – ouve o que a pessoa do outro lado falou.
+7. ✉️ **Envia uma resposta** – devolve uma página HTML como resposta.
+8. 🔁 **Fecha a conexão e espera a próxima**.
 
-Os _sockets_ sao uma forma de comunicação entre programas permitindo a troca de dados por meio de um descritor de arquivos no UNIX.
+---
 
-Um problema que encontrei no desenvolvimento foi o _Adress_ que estava sendo ocupado pelo _socket_ anterior, mesmo após o término da execução.
-Utilizando `SO_REUSEADDR` que é configurada com `setsockopt()` resolveu o problema.
+## 💡 Curiosidade
 
-#### Bind e Escutando Conexões
+Esse projeto é inspirado no famoso guia de redes do Beej:
+👉 [Beej's Guide to Network Programming](https://beej.us/guide/bgnet/html/split-wide/index.html)
 
-`bind()`: Associa um _socket_ a um endereco IP e porta especificos. E e isso.
+---
 
+## 🧪 Testando com `curl`
 
-#### Escutando X porta
+Se quiser ver a resposta direto no terminal, use:
 
-`listen()`: Usado para deixar o servidor _pronto_ para aceitar conexões, em uma porta especifica.
+```bash
+curl http://localhost:3490
+```
 
-#### Aceitação e Processamento de Conexões
+---
 
-`accept()`: aceita a conexao e recebe dados com `recv()`. Ao aceitar uma conexao, um novo _socket_ e aberto, unicamente para essa comunicação, deixando o outro livre para as próximas conexões.
+## 🧹 Finalizando
 
-
-#### Envio de Resposta HTTP
-
-Configurei uma resposta _HTTP_ simples que sera retornada ao acessar a url _http://localhost:3490_
-
-
+Para parar o servidor, pressione `Ctrl + C`.
 
 
+Feito com ❤ para quem quer aprender mais sobre C e redes!
